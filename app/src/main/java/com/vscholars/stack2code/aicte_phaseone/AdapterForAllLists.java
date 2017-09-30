@@ -324,7 +324,7 @@ public class AdapterForAllLists extends BaseExpandableListAdapter{
         }else if (message.equals("nri/pio-fn-ciwg/tp")){
             convertView = infalInflater.inflate(R.layout.label_other_courses, null);
 
-            TextView aicteId,institutionName,state,district,institutionType,program,university,level,nameOfCourses,approvedIntake,quotaSeats;
+            TextView aicteId,institutionName,state,district,institutionType,program,university,level,nameOfCourses,approvedIntake,quotaSeats,seatsType;
 
             View[] layoutViews= new View[]{convertView.findViewById(R.id.x_label_other_courses_aicteid),
                     convertView.findViewById(R.id.x_label_other_courses_institution_name),
@@ -336,7 +336,8 @@ public class AdapterForAllLists extends BaseExpandableListAdapter{
                     convertView.findViewById(R.id.x_label_other_courses_level),
                     convertView.findViewById(R.id.x_label_other_courses_course_name),
                     convertView.findViewById(R.id.x_label_other_courses_approved_intake),
-                    convertView.findViewById(R.id.x_label_other_courses_nri_quota_seats)};
+                    convertView.findViewById(R.id.x_label_other_courses_nri_quota_seats),
+                    convertView.findViewById(R.id.x_label_other_courses_seats_type)};
 
             aicteId=(TextView)layoutViews[0];
             institutionName=(TextView)layoutViews[1];
@@ -349,6 +350,7 @@ public class AdapterForAllLists extends BaseExpandableListAdapter{
             nameOfCourses=(TextView)layoutViews[8];
             approvedIntake=(TextView)layoutViews[9];
             quotaSeats=(TextView)layoutViews[10];
+            seatsType=(TextView)layoutViews[11];
 
             aicteId.setText(values[0]);
             institutionName.setText(values[1]);
@@ -360,7 +362,23 @@ public class AdapterForAllLists extends BaseExpandableListAdapter{
             level.setText(values[7]);
             nameOfCourses.setText(values[8]);
             approvedIntake.setText(values[9]);
-            quotaSeats.setText(values[10]);
+
+            if(values[10].substring(0,3).equals("NRI")){
+
+                quotaSeats.setText(values[10].substring(3,values[10].length()));
+                seatsType.setText("NRI Quota Seats");
+
+            }else if (values[10].substring(0,3).equals("PIO")){
+
+                quotaSeats.setText(values[10].substring(3,values[10].length()));
+                seatsType.setText("PIO Quota Seats");
+
+            }else if (values[10].substring(0,2).equals("FC")){
+
+                seatsType.setVisibility(View.INVISIBLE);
+                quotaSeats.setVisibility(View.INVISIBLE);
+
+            }
 
             return convertView;
 

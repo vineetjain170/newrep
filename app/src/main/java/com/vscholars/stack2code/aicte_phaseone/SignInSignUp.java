@@ -39,6 +39,8 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by vineet_jain on 31/7/17.
@@ -184,7 +186,7 @@ public class SignInSignUp extends AppCompatActivity implements GoogleApiClient.O
                 @Override
                 public void onClick(View v) {
 
-                    if(checkNo(phoneNo.getText().toString())) {
+                    if( checkNo(phoneNo.getText().toString()) && checkEmail(email.getText().toString()) ) {
                         String[] values = {name.getText().toString(), email.getText().toString(), phoneNo.getText().toString(), "generate"};
                         executer = new jsonClasses("signUp");
                         executer.J_signUp.execute(values);
@@ -280,7 +282,16 @@ public class SignInSignUp extends AppCompatActivity implements GoogleApiClient.O
                         }).start();
                     }else {
 
-                        Toast.makeText(SignInSignUp.this,"Enter a 10 digit phone number",Toast.LENGTH_LONG).show();
+                        if(checkNo(phoneNo.getText().toString())==false) {
+
+                            Toast.makeText(SignInSignUp.this, "Enter a 10 digit phone number", Toast.LENGTH_LONG).show();
+
+                        }
+                        if (checkEmail(email.getText().toString())==false){
+
+                            Toast.makeText(SignInSignUp.this, "Please enter a valid email id", Toast.LENGTH_LONG).show();
+
+                        }
 
                     }
                 }
@@ -486,6 +497,13 @@ public class SignInSignUp extends AppCompatActivity implements GoogleApiClient.O
             return false;
 
         }
+
+    }
+    boolean checkEmail(String email){
+
+        Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = VALID_EMAIL_ADDRESS_REGEX .matcher(email);
+        return matcher.find();
 
     }
 

@@ -646,7 +646,21 @@ public class jsonClasses{
                                         data[i][k][7] = J_NriPioFciDataItems.J_level = Jo.getString("corlevel");
                                         data[i][k][8] = J_NriPioFciDataItems.J_nameOfCourses = Jo.getString("corname");
                                         data[i][k][9] = J_NriPioFciDataItems.J_approvedIntake = Jo.getString("intake");
-                                        data[i][k][10]=J_NriPioFciDataItems.J_nriQuotaSeats=Jo.getString("nri_quota");
+
+                                        if(s[1].equals("[\"NRI\"]")){
+
+                                            data[i][k][10]=J_NriPioFciDataItems.J_nriQuotaSeats="NRI"+Jo.getString("nri_quota");
+
+                                        }else if (s[1].equals("[\"PIO\"]")){
+
+                                            data[i][k][10]=J_NriPioFciDataItems.J_nriQuotaSeats="PIO"+Jo.getString("pio_quota");
+
+                                        }else if (s[1].equals("[\"FC\"]")){
+
+                                            data[i][k][10]="FC"+null;
+
+                                        }
+
                                         if(jsonO.getString("total_rows")!="null"){
 
                                             totalEntries=jsonO.getString("total_rows");
